@@ -2,6 +2,7 @@ import tkinter as tk
 from PIL import Image, ImageTk
 from random import choice
 
+
 def eightball(box):
 	box.delete('1.0', tk.END)
 	responses = ["It is certain.",
@@ -30,6 +31,7 @@ root = tk.Tk()
 root.title("Magic 8 Ball")
 root['padx'] = 0
 root['pady'] = 0
+root.iconbitmap("exe/icon.ico")
 
 canvas=tk.Canvas(root, width=1280, height=720, bg="black")
 canvas.grid(columnspan=11, rowspan=11)
