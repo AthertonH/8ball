@@ -1,39 +1,56 @@
 import tkinter as tk
 from PIL import Image, ImageTk
-from tkinter.filedialog import askopenfile
+from random import choice
 
-import responses
+def eightball(box):
+	box.delete('1.0', tk.END)
+	responses = ["It is certain.",
+	             "It is decidedly so.",
+	             "Without a doubt",
+	             "Yes - definitely",
+	             "You may rely on it.",
+	             "As I see it, yes.",
+	             "Most likely.",
+	             "Outlook good.",
+	             "Yes.",
+	             "Signs point to yes.",
+	             "Reply hazy, try again.",
+	             "Ask again later.",
+	             "Better not tell you now.",
+	             "Cannot predict now.",
+	             "Concentrate and ask again.",
+	             "Don't count on it.",
+	             "My reply is no.",
+	             "My sources say no.",
+	             "Outlook not so good.",
+	             "Very doubtful."]
+	box.insert(tk.END, choice(responses))
 
-root = tk.Tk(className="Magic 8 Ball")
+root = tk.Tk()
+root.title("Magic 8 Ball")
+root['padx'] = 0
+root['pady'] = 0
 
-canvas = tk.Canvas(root, width=800, height=500)
-canvas.grid(columnspan=3, rowspan=3)
+canvas=tk.Canvas(root, width=1280, height=720, bg="black")
+canvas.grid(columnspan=11, rowspan=11)
 
-# logo
-logo = Image.open("image.png")
+
+logo = Image.open("image.bmp")
 logo = ImageTk.PhotoImage(logo)
-logo_label = tk.Label(image=logo)
-logo_label.image = logo
-logo_label.grid(column=1, row=0)
-
-# instructions
-instructions = tk.Label(root, text="Please type in your question. Then 'Shake' to see your fate.")
-instructions.grid(columnspan=3, column=0, rowspan=5, row=1)
+canvas.create_image(640,300,image=logo)
 
 
-# won't print command on GUI*************
-def shake():
-	text_box = tk.Text(root, height=10, width=50, padx=15, pady=15)
-	text_box.insert(0, responses.EightBall())
-	text_box.tag_configure("center", justify="center")
-	text_box.tag_add("center", 0, "end")
-	text_box.grid(column=1, row=3)
+label = tk.Label(root, text='Type a question then, shake', bg="black", fg="purple")
+label.grid(columnspan=1, rowspan=1)
+label.grid(column=5, row=9, sticky='new')
 
-# shake button
-shake_text = tk.StringVar()
-shake_button = tk.Button(root, textvariable=shake_text, command=lambda: shake())
+string = tk.StringVar()
+box = tk.Text(root, width=3, height=1)
+box.grid(columnspan=1, rowspan=1)
+box.grid(column=5, row=8, sticky='new')
 
-shake_text.set("Shake")
-shake_button.grid(column=1, row=2)
 
+btn = tk.Button(root, text='SHAKE', bg="black", fg="purple")
+btn['command'] = lambda: eightball(box)
+btn.grid(column=5, row=10, sticky='new')
 root.mainloop()
